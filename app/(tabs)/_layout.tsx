@@ -1,13 +1,17 @@
 import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
+import { Link, Redirect, Tabs } from 'expo-router';
 import { Platform, Pressable } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { useUser } from '@/context/UserContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { user } = useUser();
+
+  if (!user) return <Redirect href="/login" />;
 
   return (
     <Tabs
@@ -20,13 +24,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          title: 'Discover',
           tabBarIcon: ({ color }) => (
             <SymbolView
               name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
+                ios: 'safari.fill',
+                android: 'explore',
+                web: 'explore',
               }}
               tintColor={color}
               size={28}
@@ -51,13 +55,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Tab Two',
+          title: 'App flow',
           tabBarIcon: ({ color }) => (
             <SymbolView
               name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
+                ios: 'point.topleft.down.to.point.bottomright.curvepath',
+                android: 'schema',
+                web: 'schema',
               }}
               tintColor={color}
               size={28}
